@@ -88,6 +88,7 @@ export default function NavMenu() {
                         value={searchQuoteValue}
                         onChange={handleChange}
                         data-testid = 'searchInput'
+                        data-cy = 'cySearchInput'
                     />
                 </Search>
             </Toolbar>

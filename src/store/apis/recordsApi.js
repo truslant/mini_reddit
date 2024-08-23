@@ -7,7 +7,8 @@ const recordsApi = createApi({
 
     //fetchBaseQuery: gives pre-configured version of fetch(), the preconfiguration is happening within the function
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://www.reddit.com/',
+        // baseUrl: 'https://www.reddit.com/',
+        baseUrl: 'http://localhost:5173/',
     }),
 
     //endpoints: specifies define/configure how to make data fetch request to server
@@ -15,13 +16,29 @@ const recordsApi = createApi({
         return {
             //fetchRecords is a voluntary (coder defined) hook name that resutls with generation of a hook: albumsApi.useFetchRecordsQuery()
             fetchChannels: builder.query({
-                query: (channel = '/r/popular') => {
+                query: () => {
                     return {
-                        url: `${channel}.json`,
+                        url: '/r/popular.json',
                         method: 'GET',
                     };
                 },
             }),
+            // fetchChannels: builder.query({
+            //     query: (channel = '/r/popular') => {
+            //         return {
+            //             url: `${channel}.json`,
+            //             method: 'GET',
+            //         };
+            //     },
+            // }),
+            // fetchFoundRecords: builder.query({
+            //     query: () => {
+            //         return {
+            //             url: '/r/pics.json',
+            //             method: 'GET'
+            //         }
+            //     }
+            // }),
             fetchFoundRecords: builder.query({
                 query: (searchChannel) => {
                     return {

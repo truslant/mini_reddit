@@ -68,7 +68,7 @@ export default function Post({ post }) {
     };
 
     return (
-        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='post'>
+        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='post' data-cy='cyPost'>
             {/* Post author and date ('ago' format to implement) */}
             <CardHeader
                 avatar={
@@ -124,6 +124,7 @@ export default function Post({ post }) {
                     aria-expanded={expanded}
                     aria-label="show more"
                     data-testid='commentsButton'
+                    data-cy = 'cyCommentsButton'
                 >
                     <CommentIcon />
                 </ExpandMore>

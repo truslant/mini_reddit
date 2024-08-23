@@ -18,7 +18,7 @@ export default function ChannelMenuItem({ channel }) {
 
     return (
         <ListItem disablePadding >
-            <ListItemButton onClick={handleClick} data-testid='changeChannelButton'>
+            <ListItemButton onClick={handleClick} data-testid='changeChannelButton' data-cy='channelMenuItem'>
                 <ListItemIcon>
                     <RedditIcon />
                 </ListItemIcon>

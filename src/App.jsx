@@ -21,7 +21,7 @@ function App() {
   // data->children->[array num]->data->ups => upvotes count
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} data-cy='miniReddit'>
       <CssBaseline />
       <NavMenu />
       <ChannelsMenu />

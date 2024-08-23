@@ -19,7 +19,7 @@ const getRelativeTime = (timestamp) => {
 
 export default function Comment({ comment }) {
     return (
-        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='comment'>
+        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='comment' data-cy='cyComment'>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" data-testid='authorInitials'>

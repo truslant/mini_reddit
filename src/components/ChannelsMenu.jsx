@@ -25,7 +25,8 @@ function produceChannelsList(channelFetchResult, propertyToFetch) {
         channelFetchResult.data.data.children.forEach(post => {
             setOfChannels.add(post.data[propertyToFetch]);
         });
-        setOfChannels.forEach(channel => fetchedData.push(<ChannelMenuItem key={channel} channel={channel} />))
+
+        setOfChannels.forEach(channel => fetchedData.push(<ChannelMenuItem key={channel} channel={channel}  />))
     }
     return fetchedData;
 }
@@ -42,6 +43,12 @@ export default function ChannelsMenu() {
     useEffect(() => {
         !channelFetchResult.isLoading && !channelFetchResult.error && dispatch(changeChannel(channelFetchResult.data.data.children[0].data.subreddit_name_prefixed))
     }, [channels, channelFetchResult, dispatch]);
+
+    // useEffect(() => {
+    //     console.log('Fetching Status:', {
+    //         channelFetchResult
+    //     });
+    // }, [channelFetchResult.isLoading, channelFetchResult.isFetching, channelFetchResult.error, channelFetchResult.data]);
 
     // data->children->[array num]->data->score => number of votes
     // data->children->[array num]->data->author => author of the post
