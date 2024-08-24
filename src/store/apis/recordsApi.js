@@ -32,9 +32,9 @@ const recordsApi = createApi({
                 }
             }),
             fetchPostComments: builder.query({
-                query: (postUrl) => {
+                query: ({ postUrl, limit, after }) => {
                     return {
-                        url: `${postUrl}.json`,
+                        url: `${postUrl}.json?limit=${limit}${after ? `&after=${after}` : ''}`,
                         method: 'GET'
                     }
                 }

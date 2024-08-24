@@ -9,6 +9,11 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -57,6 +62,7 @@ export default function NavMenu() {
 
     const dispatch = useDispatch();
     const searchQuoteValue = useSelector(state => state.searchQuote)
+    const currentChannel = useSelector(state => state.channel)
 
     function handleChange(event) {
         dispatch(changeSearchQuote(event.target.value));
@@ -71,13 +77,24 @@ export default function NavMenu() {
         >
             <Toolbar>
                 <Typography
-                    variant="h6"
+                    variant="h5"
                     noWrap
                     component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, fontWeight: 500 }}
+
                 >
-                    Reddit Mini
+
+                    {currentChannel !== undefined ? `Reddit Mini: ` : 'Reddit Mini'}
+                    <Typography
+                        variant="h5"
+                        noWrap
+                        component="span"
+                        sx={{ fontWeight: 300 }}
+                    >
+                        {currentChannel !== undefined && `${currentChannel}`}
+                    </Typography>
                 </Typography>
+
                 <Search>
                     <SearchIconWrapper>
                         <SearchIcon />
@@ -87,8 +104,8 @@ export default function NavMenu() {
                         inputProps={{ 'aria-label': 'search' }}
                         value={searchQuoteValue}
                         onChange={handleChange}
-                        data-testid = 'searchInput'
-                        data-cy = 'cySearchInput'
+                        data-testid='searchInput'
+                        data-cy='cySearchInput'
                     />
                 </Search>
             </Toolbar>

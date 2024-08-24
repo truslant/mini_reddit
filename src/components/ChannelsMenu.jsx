@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import { useFetchChannelsQuery } from '../store';
 import ChannelMenuItem from './ChannelMenuItem';
 
-
 import { useDispatch } from 'react-redux';
 import { changeChannel } from '../store';
 
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 
 import ListItemText from '@mui/material/ListItemText';
 import RedditIcon from '@mui/icons-material/Reddit';
@@ -91,9 +89,7 @@ export default function ChannelsMenu() {
             data-testid="channelsMenu"
         >
             <Toolbar />
-            {/* <Divider /> */}
             <List>
-
                 {channels}
             </List>
         </Drawer>

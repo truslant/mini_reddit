@@ -18,6 +18,7 @@ const getRelativeTime = (timestamp) => {
 //data[1]->data->children[array num]->data->body => comment text
 
 export default function Comment({ comment }) {
+    // console.log("comment prop at Comment", comment)
     return (
         <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='comment' data-cy='cyComment'>
             <CardHeader
