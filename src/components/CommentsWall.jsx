@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import { useFetchPostCommentsQuery } from '../store';
 import Comment from './Comment';
 
+import CircularProgress from '@mui/material/CircularProgress';
+
 //data[0] -> data about the post itself
 //data[1] - data about the comments to the post
 //data[1]->data->children[array num]->data->author => comment author
@@ -15,11 +17,11 @@ export default function CommentsWall({ link }) {
 
     let comments;
     if (isLoading || isFetching) {
-        comments = <h5 data-testid='loader'>Loading...</h5>
+        comments = <CircularProgress />
     } else if (error) {
         comments = <h5 data-testid='errorMessage'>Loading error...</h5>
     } else {
-        comments = data[1].data.children.map(comment => <Comment comment={comment} key={comment.data.id} data-testid='comment'/>)
+        comments = data[1].data.children.map(comment => <Comment comment={comment} key={comment.data.id} data-testid='comment' />)
     }
 
     return (

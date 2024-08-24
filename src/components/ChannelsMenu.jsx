@@ -11,11 +11,35 @@ import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 
+import ListItemText from '@mui/material/ListItemText';
+import RedditIcon from '@mui/icons-material/Reddit';
+
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Skeleton from '@mui/material/Skeleton';
+
+const channelLoader = (number) => {
+    const dummyArray = new Array(number).fill(null);
+    return dummyArray.map((_, index) => (
+        <ListItem disablePadding key={index}>
+            <ListItemButton >
+                <ListItemIcon>
+                    <RedditIcon />
+                </ListItemIcon>
+                <ListItemText primary={
+                    <Skeleton animation="wave" height={24} width={130} />
+                }
+                />
+            </ListItemButton>
+        </ListItem>
+    ))
+}
 
 function produceChannelsList(channelFetchResult, propertyToFetch) {
     let fetchedData;
-    if (channelFetchResult.isLoading) {
-        fetchedData = (<h1>Loading...</h1>)
+    if (channelFetchResult.isLoading || channelFetchResult.isFetching) {
+        fetchedData = channelLoader(20)
     } else if (channelFetchResult.error) {
         fetchedData = (<h1 data-testid='errorMessage'>Error Loading ...</h1>)
     } else {
@@ -26,7 +50,7 @@ function produceChannelsList(channelFetchResult, propertyToFetch) {
             setOfChannels.add(post.data[propertyToFetch]);
         });
 
-        setOfChannels.forEach(channel => fetchedData.push(<ChannelMenuItem key={channel} channel={channel}  />))
+        setOfChannels.forEach(channel => fetchedData.push(<ChannelMenuItem key={channel} channel={channel} />))
     }
     return fetchedData;
 }
@@ -43,12 +67,6 @@ export default function ChannelsMenu() {
     useEffect(() => {
         !channelFetchResult.isLoading && !channelFetchResult.error && dispatch(changeChannel(channelFetchResult.data.data.children[0].data.subreddit_name_prefixed))
     }, [channels, channelFetchResult, dispatch]);
-
-    // useEffect(() => {
-    //     console.log('Fetching Status:', {
-    //         channelFetchResult
-    //     });
-    // }, [channelFetchResult.isLoading, channelFetchResult.isFetching, channelFetchResult.error, channelFetchResult.data]);
 
     // data->children->[array num]->data->score => number of votes
     // data->children->[array num]->data->author => author of the post
@@ -73,8 +91,9 @@ export default function ChannelsMenu() {
             data-testid="channelsMenu"
         >
             <Toolbar />
-            <Divider />
+            {/* <Divider /> */}
             <List>
+
                 {channels}
             </List>
         </Drawer>

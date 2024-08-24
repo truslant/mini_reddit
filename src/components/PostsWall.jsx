@@ -1,10 +1,52 @@
 import Post from './Post'
 import { useSelector } from 'react-redux';
 import { useFetchFoundRecordsQuery } from '../store';
+import { Fragment } from 'react';
 
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { Typography } from '@mui/material';
+
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+
+import Skeleton from '@mui/material/Skeleton';
+
+const postsLoader = (number) => {
+    const dummyArray = new Array(number).fill(null);
+    return dummyArray.map((_, index) => (
+        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='loader' key={index}>
+            <CardHeader
+                avatar={
+                    <Skeleton animation="wave" variant="circular" width={40} height={40} />
+                }
+
+                title={
+                    <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="80%"
+                        style={{ marginBottom: 6 }}
+                    />
+                }
+                subheader={
+                    <Skeleton animation="wave" height={10} width="40%" />
+                }
+            />
+
+            <Skeleton sx={{ height: 100 }} animation="wave" variant="rectangular" />
+
+            <CardContent>
+                <Fragment>
+                    <Skeleton animation="wave" height={10} width={200} />
+                    <Skeleton animation="wave" height={10} width={200} />
+                </Fragment>
+            </CardContent>
+        </Card>
+    ))
+}
+
 
 export default function PostsWall() {
     const channel = useSelector(state => state.channel);
@@ -14,7 +56,8 @@ export default function PostsWall() {
     if (channel) {
         let posts;
         if (isLoading || isFetching) {
-            posts = <h3 data-testid='loader'>Loading...</h3>
+            // posts = <h3 data-testid='loader'>Loading...</h3>
+            posts = postsLoader(5);
         } else if (error && error.message) {
             posts = <h3 data-testid='error'>Error Loading Posts...</h3>
         } else {
@@ -51,8 +94,9 @@ export default function PostsWall() {
             >
                 <Toolbar />
                 <Typography variant='h2' component='h2'>
-                    Loading....
+                    <Skeleton animation="wave" height={70} width={400} />
                 </Typography>
+                {postsLoader(5)}
             </Box>
         )
     }

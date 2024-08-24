@@ -67,6 +67,10 @@ export default function Post({ post }) {
         setExpanded(!expanded);
     };
 
+    const handleError = (event) => {
+        event.target.style.display = 'none'
+    }
+
     return (
         <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='post' data-cy='cyPost'>
             {/* Post author and date ('ago' format to implement) */}
@@ -92,6 +96,7 @@ export default function Post({ post }) {
                     component="img"
                     src={post.data.thumbnail}
                     alt="post preview"
+                    onError={handleError}
                 />
 
                 {/* Card text content */}
@@ -124,7 +129,7 @@ export default function Post({ post }) {
                     aria-expanded={expanded}
                     aria-label="show more"
                     data-testid='commentsButton'
-                    data-cy = 'cyCommentsButton'
+                    data-cy='cyCommentsButton'
                 >
                     <CommentIcon />
                 </ExpandMore>
