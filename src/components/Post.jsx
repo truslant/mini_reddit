@@ -101,7 +101,7 @@ export default function Post({ post }) {
 
                 {/* Card text content */}
                 <CardContent>
-                    <Typography variant="h5" component="h5">
+                    <Typography variant="body1" component="p">
                         {post.data.title}
                     </Typography>
                 </CardContent>

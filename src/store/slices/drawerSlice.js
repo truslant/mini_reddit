@@ -4,7 +4,7 @@ const options = {
     name: 'drawerOpen',
     initialState: true,
     reducers: {
-        drawerToggle: (state, action)=>{
+        drawerToggle: (state, action) => {
             return action.payload
         }
     }
@@ -13,5 +13,5 @@ const options = {
 const drawerSlice = createSlice(options);
 
 export const drawerReducer = drawerSlice.reducer;
-export const {drawerToggle} = drawerSlice.actions;
+export const { drawerToggle } = drawerSlice.actions;
 

@@ -18,8 +18,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Skeleton from '@mui/material/Skeleton';
 
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const channelLoader = (number) => {
     const dummyArray = new Array(number).fill(null);
@@ -57,12 +59,13 @@ function produceChannelsList(channelFetchResult, propertyToFetch) {
     return fetchedData;
 }
 
-
-
 const drawerWidth = 240;
 
 export default function ChannelsMenu() {
 
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+    
     const channelFetchResult = useFetchChannelsQuery();
     const channels = produceChannelsList(channelFetchResult, 'subreddit_name_prefixed');
     const drawerIsOpen = useSelector(state => state.drawer);
@@ -71,6 +74,12 @@ export default function ChannelsMenu() {
     useEffect(() => {
         !channelFetchResult.isLoading && !channelFetchResult.error && dispatch(changeChannel(channelFetchResult.data.data.children[0].data.subreddit_name_prefixed))
     }, [channels, channelFetchResult, dispatch]);
+
+    useEffect(() => {
+        if (isSmallScreen) {
+            dispatch(drawerToggle(false));
+        }
+    }, []);
 
     const handleDrawerClick = () => {
         dispatch(drawerToggle(false))

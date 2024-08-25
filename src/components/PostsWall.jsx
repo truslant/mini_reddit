@@ -89,7 +89,7 @@ export default function PostsWall() {
             >
                 <Toolbar />
 
-                <Typography variant='h2' component='h2' data-cy='channelDisplay'>
+                <Typography variant='h4' component='h4' data-cy='channelDisplay'>
                     {channel}
                 </Typography>
                 {posts}
