@@ -22,7 +22,7 @@ const drawerWidth = 240;
 const postsLoader = (number) => {
     const dummyArray = new Array(number).fill(null);
     return dummyArray.map((_, index) => (
-        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='loader' key={index}>
+        <Card sx={{ width: '100%', marginBottom: '10px', minWidth: '350px' }} data-testid='loader' key={index}>
             <CardHeader
                 avatar={
                     <Skeleton animation="wave" variant="circular" width={40} height={40} />
@@ -52,9 +52,6 @@ const postsLoader = (number) => {
         </Card>
     ))
 }
-
-
-
 
 export default function PostsWall() {
     const channel = useSelector(state => state.channel);
@@ -107,8 +104,6 @@ export default function PostsWall() {
         // data->children->[array num]->data->title => record title
         // data->children->[array num]->data->ups => upvotes count
 
-
-
         return (
             <Box
                 ref={postsContainerRef}
@@ -116,12 +111,12 @@ export default function PostsWall() {
                 sx={{
                     flexGrow: 1,
                     bgcolor: 'background.default',
-                    p: 3,
+                    p: { xs: 1, md: 3 },
                     ml: screenMargin(),
                     transition: 'margin-left 0.3s ease',
                     overflowX: 'hidden',
                     overflowY: 'auto',
-                    // height: '100vh'
+                    height: '100vh'
                 }}
                 data-testid='postsWall'
             >
@@ -141,7 +136,7 @@ export default function PostsWall() {
                 sx={{
                     flexGrow: 1,
                     bgcolor: 'background.default',
-                    p: 3,
+                    p: { xs: 1, md: 3 },
                     ml: screenMargin(),
                     transition: 'margin-left 0.3s ease',
                     overflowX: 'hidden',
@@ -151,9 +146,12 @@ export default function PostsWall() {
                 data-testid='postsWall'
             >
                 <Toolbar />
-                <Typography variant='h2' component='h2'>
-                    <Skeleton animation="wave" height={70} width={400} />
-                </Typography>
+                <Skeleton
+                    animation="wave"
+                    height={45}
+                    width={280}
+                    sx={{ p: { xs: 1, md: 3 }, }}
+                />
                 {postsLoader(5)}
             </Box>
         )
