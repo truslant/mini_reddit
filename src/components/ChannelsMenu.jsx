@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useFetchChannelsQuery } from '../store';
 import ChannelMenuItem from './ChannelMenuItem';
 
-import { useDispatch } from 'react-redux';
-import { changeChannel } from '../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeChannel, drawerToggle } from '../store';
 
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,6 +16,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Skeleton from '@mui/material/Skeleton';
+
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 const channelLoader = (number) => {
     const dummyArray = new Array(number).fill(null);
@@ -53,19 +57,24 @@ function produceChannelsList(channelFetchResult, propertyToFetch) {
     return fetchedData;
 }
 
+
+
 const drawerWidth = 240;
 
 export default function ChannelsMenu() {
 
     const channelFetchResult = useFetchChannelsQuery();
     const channels = produceChannelsList(channelFetchResult, 'subreddit_name_prefixed');
-
+    const drawerIsOpen = useSelector(state => state.drawer);
     const dispatch = useDispatch();
 
     useEffect(() => {
         !channelFetchResult.isLoading && !channelFetchResult.error && dispatch(changeChannel(channelFetchResult.data.data.children[0].data.subreddit_name_prefixed))
     }, [channels, channelFetchResult, dispatch]);
 
+    const handleDrawerClick = () => {
+        dispatch(drawerToggle(false))
+    }
     // data->children->[array num]->data->score => number of votes
     // data->children->[array num]->data->author => author of the post
     // data->children->[array num]->data->subreddit_name_prefixed => subreddit topic
@@ -78,18 +87,49 @@ export default function ChannelsMenu() {
         <Drawer
             sx={{
                 width: drawerWidth,
+
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
                 },
             }}
-            variant="permanent"
+            variant="persistent"
             anchor="left"
+            open={drawerIsOpen}
             data-testid="channelsMenu"
+            onClose={handleDrawerClick}
+
         >
-            <Toolbar />
-            <List>
+
+            <Toolbar
+                sx={{
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 1100, // Adjust zIndex to be above other elements if necessary
+                    bgcolor: 'background.default', // Set background color
+                }}
+            >
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{
+                        mr: 2,
+                        display: drawerIsOpen ? 'relative' : 'none',
+                    }}
+                    onClick={handleDrawerClick}
+
+                >
+                    <MenuOpenIcon />
+                </IconButton>
+            </ Toolbar>
+            <List
+                sx={{
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                }}>
                 {channels}
             </List>
         </Drawer>

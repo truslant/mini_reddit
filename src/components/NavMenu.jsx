@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { changeSearchQuote } from '../store';
+import { changeSearchQuote, drawerToggle } from '../store';
 
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -8,6 +8,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -63,24 +65,50 @@ export default function NavMenu() {
     const dispatch = useDispatch();
     const searchQuoteValue = useSelector(state => state.searchQuote)
     const currentChannel = useSelector(state => state.channel)
+    const drawerIsOpen = useSelector(state => state.drawer)
 
     function handleChange(event) {
         dispatch(changeSearchQuote(event.target.value));
+    }
+
+    const handleDrawerClick = () => {
+        dispatch(drawerToggle(true))
     }
 
     return (
 
         <AppBar
             position="fixed"
-            sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+            sx={{ 
+                width: drawerIsOpen ? `calc(100% - ${drawerWidth}px)` : '100%',
+                ml: drawerIsOpen ? `${drawerWidth}px` : 0,
+                transition: 'width 0.3s ease'
+            }}
             data-testid='navmenu'
         >
             <Toolbar>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{
+                        mr: 2,
+                        display: drawerIsOpen ? 'none' : 'relative',
+                    }}
+                    onClick={handleDrawerClick}
+                >
+                    <MenuIcon />
+                </IconButton>
                 <Typography
                     variant="h5"
                     noWrap
                     component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, fontWeight: 500 }}
+                    sx={{
+                        flexGrow: 1,
+                        display: { xs: 'none', sm: 'block' },
+                        fontWeight: 500
+                    }}
 
                 >
 

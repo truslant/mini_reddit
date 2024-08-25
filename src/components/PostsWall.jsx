@@ -13,6 +13,8 @@ import CardContent from '@mui/material/CardContent';
 
 import Skeleton from '@mui/material/Skeleton';
 
+const drawerWidth = 240;
+
 const postsLoader = (number) => {
     const dummyArray = new Array(number).fill(null);
     return dummyArray.map((_, index) => (
@@ -52,6 +54,7 @@ export default function PostsWall() {
     const channel = useSelector(state => state.channel);
     const { data, error, isLoading, isFetching } = useFetchFoundRecordsQuery(channel, { skip: !channel });
     const searchQuote = useSelector(state => state.searchQuote);
+    const drawerIsOpen = useSelector(state => state.drawer);
 
     if (channel) {
         let posts;
@@ -75,10 +78,17 @@ export default function PostsWall() {
         return (
             <Box
                 component="main"
-                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+                sx={{
+                    flexGrow: 1,
+                    bgcolor: 'background.default',
+                    p: 3,
+                    ml: drawerIsOpen ? 0 : `-${drawerWidth}px`,
+                    transition: 'margin-left 0.3s ease'
+                }}
                 data-testid='postsWall'
             >
                 <Toolbar />
+
                 <Typography variant='h2' component='h2' data-cy='channelDisplay'>
                     {channel}
                 </Typography>
@@ -89,7 +99,13 @@ export default function PostsWall() {
         return (
             <Box
                 component="main"
-                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+                sx={{
+                    flexGrow: 1,
+                    bgcolor: 'background.default',
+                    p: 3,
+                    ml: drawerIsOpen ? 0 : `-${drawerWidth}px`,
+                    transition: 'margin-left 0.3s ease'
+                }}
                 data-testid='postsWall'
             >
                 <Toolbar />
@@ -102,3 +118,4 @@ export default function PostsWall() {
     }
 }
 
+//{ xs: 'none', sm: 'block' }

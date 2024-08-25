@@ -4,6 +4,7 @@ import { recordsApi } from "./apis/recordsApi";
 
 import { chanelReducer } from "./slices/chanelSlice";
 import { searchQuoteReducer } from "./slices/filterSlice";
+import { drawerReducer, drawerToggle } from "./slices/drawerSlice";
 
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
         [recordsApi.reducerPath]: recordsApi.reducer,
         channel: chanelReducer,
         searchQuote: searchQuoteReducer,
+        drawer: drawerReducer
     },
 
     // 
@@ -27,4 +29,5 @@ setupListeners(store.dispatch);
 
 export { useFetchChannelsQuery, useFetchFoundRecordsQuery, useFetchPostCommentsQuery } from './apis/recordsApi';
 export { changeChannel } from "./slices/chanelSlice";
-export { changeSearchQuote } from "./slices/filterSlice"
+export { changeSearchQuote } from "./slices/filterSlice";
+export { drawerToggle } from './slices/drawerSlice';
