@@ -65,7 +65,7 @@ export default function ChannelsMenu() {
 
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-    
+
     const channelFetchResult = useFetchChannelsQuery();
     const channels = produceChannelsList(channelFetchResult, 'subreddit_name_prefixed');
     const drawerIsOpen = useSelector(state => state.drawer);
@@ -73,7 +73,7 @@ export default function ChannelsMenu() {
 
     useEffect(() => {
         !channelFetchResult.isLoading && !channelFetchResult.error && dispatch(changeChannel(channelFetchResult.data.data.children[0].data.subreddit_name_prefixed))
-    }, [channels, channelFetchResult, dispatch]);
+    }, [channelFetchResult.isLoading]);
 
     useEffect(() => {
         if (!isSmallScreen) {

@@ -2,6 +2,7 @@ import Post from './Post'
 import { useSelector } from 'react-redux';
 import { useFetchFoundRecordsQuery } from '../store';
 import { Fragment } from 'react';
+import { useRef, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -53,6 +54,8 @@ const postsLoader = (number) => {
 }
 
 
+
+
 export default function PostsWall() {
     const channel = useSelector(state => state.channel);
     const { data, error, isLoading, isFetching } = useFetchFoundRecordsQuery(channel, { skip: !channel });
@@ -77,7 +80,14 @@ export default function PostsWall() {
             }
         }
     }
-    
+
+    const postsContainerRef = useRef(null);
+    useEffect(() => {
+        if (postsContainerRef.current) {
+            postsContainerRef.current.scrollTop = 0;
+        }
+    }, [channel])
+
     if (channel) {
         let posts;
         if (isLoading || isFetching) {
@@ -101,13 +111,17 @@ export default function PostsWall() {
 
         return (
             <Box
+                ref={postsContainerRef}
                 component="main"
                 sx={{
                     flexGrow: 1,
                     bgcolor: 'background.default',
                     p: 3,
                     ml: screenMargin(),
-                    transition: 'margin-left 0.3s ease'
+                    transition: 'margin-left 0.3s ease',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                    height: '100vh'
                 }}
                 data-testid='postsWall'
             >
@@ -122,13 +136,17 @@ export default function PostsWall() {
     } else {
         return (
             <Box
+                ref={postsContainerRef}
                 component="main"
                 sx={{
                     flexGrow: 1,
                     bgcolor: 'background.default',
                     p: 3,
                     ml: screenMargin(),
-                    transition: 'margin-left 0.3s ease'
+                    transition: 'margin-left 0.3s ease',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                    height: '100vh'
                 }}
                 data-testid='postsWall'
             >
@@ -141,5 +159,3 @@ export default function PostsWall() {
         )
     }
 }
-
-//{ xs: 'none', sm: 'block' }
