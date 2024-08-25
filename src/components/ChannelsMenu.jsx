@@ -76,8 +76,8 @@ export default function ChannelsMenu() {
     }, [channels, channelFetchResult, dispatch]);
 
     useEffect(() => {
-        if (isSmallScreen) {
-            dispatch(drawerToggle(false));
+        if (!isSmallScreen) {
+            dispatch(drawerToggle(true));
         }
     }, []);
 

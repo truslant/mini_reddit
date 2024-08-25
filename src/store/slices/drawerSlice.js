@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const options = {
     name: 'drawerOpen',
-    initialState: true,
+    initialState: false,
     reducers: {
         drawerToggle: (state, action) => {
             return action.payload
