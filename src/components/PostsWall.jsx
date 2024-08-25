@@ -121,7 +121,7 @@ export default function PostsWall() {
                     transition: 'margin-left 0.3s ease',
                     overflowX: 'hidden',
                     overflowY: 'auto',
-                    height: '100vh'
+                    // height: '100vh'
                 }}
                 data-testid='postsWall'
             >

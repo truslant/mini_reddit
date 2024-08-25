@@ -24,6 +24,8 @@ import shortNumber from 'short-number';
 
 import { formatDistanceToNowStrict } from 'date-fns';
 
+
+
 const getRelativeTime = (timestamp) => {
     const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
     return `${formatDistanceToNowStrict(date)} ago`;
@@ -72,7 +74,7 @@ export default function Post({ post }) {
     }
 
     return (
-        <Card sx={{ width: '100%', marginBottom: '10px' }} data-testid='post' data-cy='cyPost'>
+        <Card sx={{ width: '100%', marginBottom: '10px', minWidth: '435px' }} data-testid='post' data-cy='cyPost'>
             {/* Post author and date ('ago' format to implement) */}
             <CardHeader
                 avatar={
