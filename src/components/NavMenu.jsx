@@ -79,7 +79,7 @@ export default function NavMenu() {
 
         <AppBar
             position="fixed"
-            sx={{ 
+            sx={{
                 width: drawerIsOpen ? `calc(100% - ${drawerWidth}px)` : '100%',
                 ml: drawerIsOpen ? `${drawerWidth}px` : 0,
                 transition: 'width 0.3s ease'

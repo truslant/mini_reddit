@@ -13,6 +13,9 @@ import CardContent from '@mui/material/CardContent';
 
 import Skeleton from '@mui/material/Skeleton';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 const drawerWidth = 240;
 
 const postsLoader = (number) => {
@@ -56,6 +59,25 @@ export default function PostsWall() {
     const searchQuote = useSelector(state => state.searchQuote);
     const drawerIsOpen = useSelector(state => state.drawer);
 
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const screenMargin = () => {
+        if (!isSmallScreen) {
+            if (drawerIsOpen) {
+                return 0
+            } else {
+                return `-${drawerWidth}px`
+            }
+        } else {
+            if (drawerIsOpen) {
+                return `${drawerWidth}px`
+            } else {
+                return 0
+            }
+        }
+    }
+    
     if (channel) {
         let posts;
         if (isLoading || isFetching) {
@@ -75,6 +97,8 @@ export default function PostsWall() {
         // data->children->[array num]->data->title => record title
         // data->children->[array num]->data->ups => upvotes count
 
+
+
         return (
             <Box
                 component="main"
@@ -82,7 +106,7 @@ export default function PostsWall() {
                     flexGrow: 1,
                     bgcolor: 'background.default',
                     p: 3,
-                    ml: drawerIsOpen ? 0 : `-${drawerWidth}px`,
+                    ml: screenMargin(),
                     transition: 'margin-left 0.3s ease'
                 }}
                 data-testid='postsWall'
@@ -103,7 +127,7 @@ export default function PostsWall() {
                     flexGrow: 1,
                     bgcolor: 'background.default',
                     p: 3,
-                    ml: drawerIsOpen ? 0 : `-${drawerWidth}px`,
+                    ml: screenMargin(),
                     transition: 'margin-left 0.3s ease'
                 }}
                 data-testid='postsWall'

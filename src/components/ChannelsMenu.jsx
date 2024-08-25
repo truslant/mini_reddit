@@ -103,12 +103,11 @@ export default function ChannelsMenu() {
                     boxSizing: 'border-box',
                 },
             }}
-            variant="persistent"
+            variant={isSmallScreen ? "temporary" : "persistent"}
             anchor="left"
             open={drawerIsOpen}
             data-testid="channelsMenu"
             onClose={handleDrawerClick}
-
         >
 
             <Toolbar
