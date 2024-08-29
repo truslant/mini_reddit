@@ -20,7 +20,10 @@ export default function CommentsWall({ link }) {
     const [after, setAfter] = useState(null);
     const [comments, setComments] = useState([]);
 
-    const { data, error, isLoading, isFetching, refetch } = useFetchPostCommentsQuery({ postUrl: link, limit, after });
+    const { data, error, isLoading, isFetching, refetch } = 
+    
+    useFetchPostCommentsQuery({ postUrl: link, limit, after });
+
     useEffect(() => {
         if (data) {
             const newSet = new Set();
@@ -28,7 +31,6 @@ export default function CommentsWall({ link }) {
             data[1].data.children.forEach(commentObj => newSet.add(commentObj));
             const newArray = [...newSet];
             newArray.pop();
-            // console.log("newArray", newArray);
             setComments(newArray);
             const lastComment = newArray[newArray.length - 1];
             setAfter(lastComment ? lastComment.data.name : null)
@@ -41,9 +43,7 @@ export default function CommentsWall({ link }) {
 
     return (
         < >
-            {console.log("comments", comments)}
             {data && comments.map(comment => {
-                console.log("comment", comment);
                 return <Comment comment={comment} key={comment.data.name} />
             })}
             {comments && (
@@ -51,7 +51,6 @@ export default function CommentsWall({ link }) {
                     size="small"
                     onClick={loadMore}
                     loading={isLoading || isFetching}
-
                     variant="outlined"
                 >
                     <span>More comments</span>

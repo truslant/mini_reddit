@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 
 import React from 'react';
+import { useState } from 'react';
 
 import CommentsWall from './CommentsWall';
 
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -22,21 +22,9 @@ import CommentIcon from '@mui/icons-material/Comment';
 
 import shortNumber from 'short-number';
 
-import { formatDistanceToNowStrict } from 'date-fns';
+import { sxStyles, ExpandMore } from './PostStyles';
 
-
-
-const getRelativeTime = (timestamp) => {
-    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
-    return `${formatDistanceToNowStrict(date)} ago`;
-};
-
-const ExpandMore = styled((props) => {
-    const { ...other } = props;
-    return <IconButton {...other} />;
-})(() => ({
-    marginLeft: 'auto',
-}));
+import { getRelativeTime } from './componentFunctions';
 
 // data from channels:
 // data->children->[array num]->data->score => number of votes
@@ -63,7 +51,7 @@ const ExpandMore = styled((props) => {
 //data[1]->data->children[array num]->data->body => comment text
 
 export default function Post({ post }) {
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -74,8 +62,7 @@ export default function Post({ post }) {
     }
 
     return (
-        <Card sx={{ width: '100%', marginBottom: '10px', minWidth: '350px' }} data-testid='post' data-cy='cyPost'>
-            {/* Post author and date ('ago' format to implement) */}
+        <Card sx={sxStyles.card} data-testid='post' data-cy='cyPost'>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -90,11 +77,7 @@ export default function Post({ post }) {
             <Box sx={{ display: 'flex' }}>
                 {/* Card Image place */}
 
-                <CardMedia sx={{
-                    height: 'auto',
-                    width: '200px',
-                    marginLeft: "10px"
-                }}
+                <CardMedia sx={sxStyles.cardMedia}
                     component="img"
                     src={post.data.thumbnail}
                     alt="post preview"
